@@ -1,0 +1,111 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+        <meta charset="UTF-8">
+     <script src="/socket.io/socket.io.js"></script>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+     <script>
+         
+          var socket = io.connect(); // faz a conexão com o socket.io do node.js
+
+          //recebe o valor "sensorTemp" enviado pelo node.js
+          socket.on('sensorTemp', function(valor){
+              //escreve o "valor" que é passado na função no id #Temp
+              $("#Temp").text(valor);
+              $("#Temp2").text(valor);
+            });
+         
+         
+
+         function ledOn(){
+             //aqui nos enviamos o a 'ledON' para o socket.on la no servidor java script
+             socket.emit('ledON');
+            
+         }
+         function ledOff(){
+             socket.emit('ledOFF');
+             
+         }
+         
+          function vOn(){
+             socket.emit('vON');
+            
+         }
+         function vOff(){
+             socket.emit('vOFF');
+             
+         }
+         
+          $(document).ready(function(){
+    
+    $('.modal').modal();
+  });
+        </script>
+    </head>
+
+    <body>
+          <nav>
+    <div class="nav-wrapper grey darken-4">
+      <a href="#" class="brand-logo center">MyRoom</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        </ul>
+    </div>
+  </nav>
+        
+      <div class="video-container">
+        
+          
+       
+          
+      </div>
+        
+        <br>
+        <br>
+        
+      
+        <div class="row">
+            <div class="col s6 m6 l6">
+             <a class="waves-effect waves-light btn grey darken-4" onclick="ledOff()">Ligar</a>
+                <a class="waves-effect waves-light btn grey darken-4" onclick="ledOn()">Desligar</a>
+                <a class="waves-effect waves-light btn grey darken-4" onclick="vOff()">Ligar Ventilador</a>
+                <a class="waves-effect waves-light btn grey darken-4" onclick="vOn()">Desligar ventilador</a>
+            </div>
+            <div class="col s6 m6 l6">
+                <!--aqui dentro da tag span existe um id 'Temp' se você repar e o msm que está recebendo o valor do sensor no java script -->
+             <p>Temperatura ambiente:<span class="text-primary" id="Temp">0</span></p>
+            </div>
+            </div>
+        
+      
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Temperatura</h4>
+      <p>Esse valor está vindo do sensor A0: <span class="text-primary" id="Temp2">0</span></p>
+        <p>Emtempo real!</p>
+        <P>Aqui vai um grafico com historico de temperatura.</P>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+        
+        
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    </body>
+  </html>
+        
+
+
+
+          
+     
